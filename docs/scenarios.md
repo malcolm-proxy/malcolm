@@ -118,31 +118,30 @@ If Malcolm is not managing the API key (i.e., `MALCOLM_TARGET_API_KEY` is unset)
 
 ## Anthropic
 
-Start Malcolm with Anthropic as the target:
-
-```bash
-uv run malcolm \
-  --malcolm-target-url=https://api.anthropic.com/v1 \
-  --malcolm-target-api-key=sk-ant-...
-```
-
 ### Using Anthropic's models in Claude Code
 
-```bash
-ANTHROPIC_BASE_URL=http://127.0.0.1:8900 \
-ANTHROPIC_API_KEY=dummy \
-claude
-```
+This is the most straightforward scenario: Claude Code already speaks the Anthropic API natively, so Malcolm just forwards requests as-is.
 
-Claude Code natively speaks the Anthropic API, so this is the most straightforward scenario. Malcolm forwards requests directly to Anthropic's servers.
-
-As with OpenAI, you can alternatively leave `MALCOLM_TARGET_API_KEY` unset and provide the real key via the client:
+If Claude Code is already authenticated against Anthropic via the default `/login` flow, no API key configuration is needed on either side. Start Malcolm pointing at Anthropic:
 
 ```bash
-ANTHROPIC_BASE_URL=http://127.0.0.1:8900 \
-ANTHROPIC_API_KEY=sk-ant-... \
-claude
+uv run malcolm --malcolm-target-url=https://api.anthropic.com/v1
 ```
+
+Then point Claude Code at Malcolm:
+
+```bash
+ANTHROPIC_BASE_URL=http://127.0.0.1:8900 claude
+```
+
+That's it. Claude Code's existing credentials are forwarded to Anthropic through Malcolm.
+
+#### When you do need to specify an API key
+
+You only need to deal with API keys in these cases:
+
+- **Override the credentials the client uses**: pass `ANTHROPIC_API_KEY=sk-ant-...` when launching `claude`. Useful if Claude Code has no credentials configured, or you want to ignore the ones it has.
+- **Use a different key on Malcolm's side**: pass `--malcolm-target-api-key=sk-ant-...` when launching `malcolm`. Malcolm will replace the incoming auth header before forwarding, so the request reaches Anthropic with this key regardless of what the client sent.
 
 ### Using Anthropic's models in OpenCode
 
