@@ -35,6 +35,23 @@ ANTHROPIC_API_KEY="" \
 claude --model qwen3-coder:30b
 ```
 
+Or do both in a single command — Malcolm starts the proxy silently and opens Claude Code already wired to it. With no other arguments, the target defaults to Anthropic:
+
+```bash
+malcolm --launch-claude
+```
+
+For other backends, combine `--launch-claude` with the usual flags:
+
+```bash
+malcolm --launch-claude \
+  --malcolm-target-url=http://localhost:11434/v1 \
+  --anthropic-api-key="" --anthropic-auth-token=ollama \
+  --model=qwen3-coder:30b
+```
+
+When Claude Code exits, Malcolm shuts down. See [docs/scenarios.md](docs/scenarios.md) for one-liners covering Anthropic, OpenAI, and Ollama.
+
 Browse logged requests with the terminal UI:
 
 ```bash
@@ -81,6 +98,8 @@ Core proxy settings via environment variables (or `.env` file):
 | `MALCOLM_DB_PATH` | `malcolm.db` | SQLite database file path |
 | `MALCOLM_LOG_LEVEL` | `info` | Log level |
 | `MALCOLM_CONFIG_FILE` | `malcolm.yaml` | Path to the transform pipeline config file |
+
+The `--launch-claude`, `--model`, `--anthropic-api-key`, and `--anthropic-auth-token` flags are CLI-only — they configure the launched client, not the proxy itself, and have no `MALCOLM_*` env counterparts.
 
 ### Transform pipeline
 
