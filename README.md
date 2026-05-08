@@ -18,7 +18,7 @@ Tools like `claude` and `opencode` construct complex prompts with system instruc
 pip install malcolm-proxy
 
 # Or from `git`
-git clone https://github.com/elcapo/malcolm
+git clone https://github.com/malcolm-proxy/malcolm
 cd malcolm
 uv pip install -e .
 

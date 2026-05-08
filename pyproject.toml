@@ -40,9 +40,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/elcapo/malcolm"
-Repository = "https://github.com/elcapo/malcolm"
-Issues = "https://github.com/elcapo/malcolm/issues"
+Homepage = "https://github.com/malcolm-proxy/malcolm"
+Repository = "https://github.com/malcolm-proxy/malcolm"
+Issues = "https://github.com/malcolm-proxy/malcolm/issues"
 
 [build-system]
 requires = ["hatchling"]
