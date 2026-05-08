@@ -13,16 +13,19 @@ Tools like `claude` and `opencode` construct complex prompts with system instruc
 
 ## Quick start
 
+Install Malcolm as a user-wide CLI tool (isolated venv, `malcolm` on your `PATH`):
+
 ```bash
-# Either install from `pip`
-pip install malcolm-proxy
+uv tool install malcolm-proxy
+# or, if you prefer pipx:
+# pipx install malcolm-proxy
+```
 
-# Or from `git`
-git clone https://github.com/malcolm-proxy/malcolm
-cd malcolm
-uv pip install -e .
+> Plain `pip install malcolm-proxy` is discouraged on modern Linux and macOS (PEP 668). Prefer `uv tool` or `pipx`. To hack on the source, see [Development](#development).
 
-# Start the proxy
+Start the proxy:
+
+```bash
 malcolm --malcolm-target-url=http://localhost:11434/v1
 ```
 
