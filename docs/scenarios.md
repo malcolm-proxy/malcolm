@@ -19,6 +19,17 @@ No API key is needed — Ollama runs locally without authentication.
 
 ### Using Ollama's models in Claude Code
 
+In one command:
+
+```bash
+malcolm --launch-claude \
+  --malcolm-target-url=http://localhost:11434/v1 \
+  --anthropic-api-key="" --anthropic-auth-token=ollama \
+  --model=qwen3-coder:30b
+```
+
+Or, if Malcolm is already running, configure Claude Code manually:
+
 ```shell
 ANTHROPIC_AUTH_TOKEN=ollama \
 ANTHROPIC_BASE_URL=http://127.0.0.1:8900 \
@@ -81,6 +92,16 @@ uv run malcolm \
   --malcolm-target-api-key=sk-...
 ```
 
+Or do everything in one command (assumes the same `malcolm.yaml` with the translation transform):
+
+```bash
+malcolm --launch-claude \
+  --malcolm-target-url=https://api.openai.com/v1 \
+  --malcolm-target-api-key=sk-... \
+  --anthropic-api-key="" --anthropic-auth-token=dummy \
+  --model=gpt-4.1
+```
+
 Then point Claude Code at Malcolm as if it were an Anthropic backend:
 
 ```shell
@@ -129,6 +150,22 @@ uv run malcolm --malcolm-target-url=https://api.anthropic.com/v1
 ```
 
 Then point Claude Code at Malcolm:
+
+The shortest path — Malcolm defaults the target to Anthropic when `--launch-claude` is given alone, and your shell's existing `ANTHROPIC_API_KEY` is forwarded to the upstream:
+
+```bash
+malcolm --launch-claude
+```
+
+If you want Malcolm to manage the upstream key instead and feed Claude Code a dummy:
+
+```bash
+malcolm --launch-claude \
+  --malcolm-target-api-key=sk-ant-... \
+  --anthropic-api-key=dummy
+```
+
+Equivalent manual setup, with Malcolm already running:
 
 ```bash
 ANTHROPIC_BASE_URL=http://127.0.0.1:8900 claude
